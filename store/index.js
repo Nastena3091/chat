@@ -1,13 +1,13 @@
 export const state = () => ({
-  user:{}
+  user:{},
+  messages:[]
 })
-export const mutation = {
+export const mutations = {
   setUser(state, user){
     state.user=user
+  },
+  SOCKET_newMessage(state, message) {
+    state.messages.push(message)
   }
 }
-export const actions = {
-  SOCKET_newMessage(ctx, data) {
-    console.log('Message received', data)
-  }
-}
+

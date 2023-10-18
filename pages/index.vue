@@ -1,6 +1,6 @@
 <template>
   <div class="bg-orange-lightest w-full flex h-screen">
-        <div class="w-1/3 bg-red-lightest mx-auto my-auto rounded-lg">
+        <div class=" bg-red-lightest mx-auto my-auto rounded-lg" >
           <FormulateForm @submit="submit">
             <FormulateInput
             type="text"
@@ -47,7 +47,6 @@ export default {
     name:'',
     email:'',
     password:'',
-
   }),
   sockets: {
     connect: function() {
@@ -55,18 +54,23 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setUser"]),
+    ...mapMutations(['setUser']),
     submit(){
       const user={
         name: this.name,
         email: this.email,
         password: this.password
       }
-      this.setUser(user)
-      this.$router.push('/chat')
+      
       console.log('OK')
-      this.$socket.emit('SignUp',{
-        user
+      this.$socket.emit('SignUp',user,data=>{
+        if (typeof data ==='string'){
+          console.error(data)
+        } else {
+          user.id = data.userId
+          this.setUser(user)
+          this.$router.push('/chat')
+        }
       })
     },
     message() {
@@ -84,5 +88,7 @@ export default {
   @apply min-h-screen flex justify-center items-center text-center mx-auto;
 }
 */
-
+a{
+  @apply 
+}
 </style>

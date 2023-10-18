@@ -3,16 +3,12 @@
         <div class="bg--lightest h-screen overflow-y-auto w-full relative">
           <div class="flex sticky z-10 text-3xl text-center" style="top: 0;">
             <div class="w-full bg-red-lighter py-5">Петро</div>
-            <div class="w-full bg-purple-lighter py-5">Анастасія</div>
+            <div class="w-full bg-purple-lighter py-5">{{user.name}}</div>
           </div>
-          <div class="pb-20 flex-row w-full">
-            <div class="max-w-md get rounded-lg m-10 p-2">
-              <p align="justify"></p>
-              <p align="right" class="text-grey-lighter">18:06</p>
-            </div>
-            <div class="max-w-md send rounded-lg m-10 p-2">
-              <p align="justify" >Привіт! Добре, дякую що спитав.</p>
-              <p align="right" class="text-grey-lighter">18:06</p>
+          <div class="pb-20 flex-row w-full" >
+            <div class="max-w-md get rounded-lg m-10 p-2" v-for="m in messages" :key="m.text">
+              <p align="justify">{{ m.text }}</p>
+              <p align="right" class="text-grey-lighter"></p>
             </div>
           </div>
           <div class="fixed flex w-full" style="bottom: 24px;">
@@ -30,5 +26,11 @@
     @apply bg-purple-lighter ml-auto
     }
 </style>
-<script setup>
+<script>
+import {mapState} from 'vuex'
+
+export default{
+  middleware:['chat'],
+  computed: mapState(["user", "messages"])
+}
 </script>
