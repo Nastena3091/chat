@@ -88,7 +88,5 @@ export default {
   @apply min-h-screen flex justify-center items-center text-center mx-auto;
 }
 */
-a{
-  @apply 
-}
+
 </style>
