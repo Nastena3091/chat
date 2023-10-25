@@ -42,6 +42,7 @@
 
 <script>
 import {mapMutations} from 'vuex'
+import axios from 'axios'
 export default {
   data:()=>({
     name:'',
@@ -63,6 +64,16 @@ export default {
       }
       
       console.log('OK')
+      axios({
+        method:'post',
+        url:'http://localhost:3000/api/user',
+        headers: {"Content-Type": 'application/json'},
+        data:user
+      }).then(function(res){
+        console.log(res)
+      }).catch(function(err){
+        console.log(err)
+      })
       this.$socket.emit('SignUp',user,data=>{
         if (typeof data ==='string'){
           console.error(data)

@@ -41,6 +41,9 @@ module.exports = {
   ],
 
   build: {
+    transpile: [
+      'axios'
+    ],
     /*
      ** You can extend webpack config here
      */

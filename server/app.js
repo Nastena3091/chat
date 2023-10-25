@@ -1,10 +1,21 @@
 const app = require('express')()
+const express = require('express')
+const bodyParser = require('body-parser')
+// const http = require('http')
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 const router = require('./routers')
 const m = (name, text, id)=>({name, text, id})
-const axios = require('axios').default
-app.use('/', router)
+// const axios = require('axios').default
+
+// app.use(bodyParser.json());
+// app.use(
+//   bodyParser.urlencoded({
+//     extended: true,
+//   }),
+// );
+app.use(express.json())
+app.use('/api', router)
 
 io.on('connection', socket => {
   console.log('IO Connected')
@@ -22,23 +33,13 @@ io.on('connection', socket => {
     }
     socket.join('1')
     cb({userId: socket.id})
-    axios({
-      method:'post',
-      url:'http://localhost:3000/user',
-      headers: {'Content-Type': 'application/json'},
-      params:{
-        socketid:socket.id,
-        name: data.name,
-        email: data.email,
-        password: data.password
-      }
-    }).then(function(res){
-      console.log(res.data)
-      socket.emit('newMessage', m('admin',`Ласкаво просимо ${res.data.name}`))
-      socket.broadcast.to('1').emit('newMessage', m(data.name,`Користувач ${res.data.name} приєднався`, res.data._id))
-    }).catch(function(err){
-      console.log(err)
-    })
+    // .then(function(res){
+    //   console.log(res.data)
+    //   socket.emit('newMessage', m('admin',`Ласкаво просимо ${res.data.name}`))
+    //   socket.broadcast.to('1').emit('newMessage', m(data.name,`Користувач ${res.data.name} приєднався`, res.data._id))
+    // }).catch(function(err){
+    //   console.log(err)
+    // })
     
 })
 })
